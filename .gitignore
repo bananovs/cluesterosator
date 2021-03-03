@@ -1,4 +1,4 @@
 /app/vendor/
-/modules/__*
+/modules/__pycache__/*
 composer.json
 composer.lock
