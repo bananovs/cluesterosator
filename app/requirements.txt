@@ -1,0 +1,6 @@
+sklearn
+numpy
+scikit-learn
+snowballstemmer
+nltk
+pandas

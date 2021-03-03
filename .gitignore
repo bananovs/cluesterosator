@@ -1,0 +1,4 @@
+/app/vendor/
+/modules/__*
+composer.json
+composer.lock
