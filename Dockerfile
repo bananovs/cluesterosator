@@ -5,8 +5,8 @@ RUN apt-get install -y wget nano nginx php7.2 php7.2-fpm php7.2-intl php7.2-curl
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -g 1000 www-data
-RUN useradd -u 1000 -ms /bin/bash -g www-data www-data
+#RUN groupadd -g 1000 www-data
+#RUN useradd -u 1000 -ms /bin/bash -g www-data www-data
 
 COPY --chown=www-data:www-data ./app /home/www
 # COPY ./app /home/www/
