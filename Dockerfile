@@ -12,8 +12,9 @@ COPY --chown=www-data:www-data ./app /home/www
 # COPY ./app /home/www/
 WORKDIR /home/www/
 RUN chmod 777 -R  data
-RUN chown www-data:www-data run.py 
-RUN chmod u+x run.py
+RUN chown -R www-data:www-data ./data
+RUN chown -R www-data:www-data /var
+
 # Copying default Nginx configuration
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
