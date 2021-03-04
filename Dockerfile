@@ -35,15 +35,16 @@ RUN apt update \
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONIOENCODING=utf-8
+ENV LANG=ru_RU.UTF-8
 
 COPY ./app/requirements.txt /home/www/requirements.txt
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-USER root
-
 ADD entrypoint.sh /root/entrypoint.sh
 ENTRYPOINT [ "/bin/bash", "/root/entrypoint.sh" ]
 
+USER root
 
