@@ -5,15 +5,14 @@ RUN apt-get install -y wget nano nginx php7.2 php7.2-fpm php7.2-intl php7.2-curl
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY ./app /home/www/
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+COPY --chown=www:www ./app /home/www
+# COPY ./app /home/www/
 WORKDIR /home/www/
 # Copying default Nginx configuration
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
-
-# RUN groupadd -g 1000 www
-# RUN useradd -u 1000 -ms /bin/bash -g www www
-
-# COPY --chown=www:www . /home/www
 
 RUN apt update \
     && apt install -y --no-install-recommends build-essential \
