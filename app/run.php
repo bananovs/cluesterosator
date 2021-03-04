@@ -1,16 +1,15 @@
 <?php 
-// require 'vendor/autoload.php';
+//  require 'vendor/autoload.php';
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL);
 
 class Clustering
 {
     protected $changeYear = false;
+    public $finalOutput = '';
+    public $year = '';
 
-
-    public function __construct($changeYear)
-    {
-        $this->changeYear = $changeYear;
-        $this->year = date('Y');
-    }
 
     protected function storeKeywordsToFile($keywords)
     {
@@ -29,18 +28,33 @@ class Clustering
 
     public function goClusteriseKeys($keywords)
     {
-        $file = $this->storeKeywordsToFile($keywords);
-        $locale = 'ru_RU.utf-8';
-        setlocale(LC_CTYPE, $locale);
-        putenv("PYTHONIOENCODING=utf-8");
-        $command = escapeshellcmd('python run.py '. $file['in'] . ' ' . $file['out']);
-        $output = shell_exec($command);
-        // unlink($file['out']);
-        unlink($file['in']);
-        return $output;
+        // dd(array_chunk(explode(PHP_EOL, $keywords), 300));
+        $chunks = array_chunk(explode(PHP_EOL, $keywords), 250);
+        foreach ($chunks as $chunk) {
+            $file = $this->storeKeywordsToFile(implode("\n", $chunk));
+            // var_dump($file);
+            $locale = 'ru_RU.utf-8';
+            setlocale(LC_CTYPE, $locale);
+            putenv("PYTHONIOENCODING=utf-8");
+            $command = escapeshellcmd('python run.py '. $file['in'] . ' ' . $file['out']);
+            $output = shell_exec($command);
+            usleep(1000);
+            unlink($file['out']);
+            unlink($file['in']);
+            $this->finalOutput .= $output;
+        }
+        
+        return str_ireplace("\n\n\n", "\n\n", $this->finalOutput);
     }
 
-    public function makeWordsArray($output)
+    public function changeYear($value)
+    {
+        $this->year = date('Y');
+        $value = str_ireplace(['2015','2016','2017','2018','2019','2020'], $this->year, $value);
+        return $value;
+    }
+
+    public function toArray($output)
     {
         $i = 0;
         $array = explode("\n", $output);
@@ -49,9 +63,7 @@ class Clustering
                 $i++; 
                 continue;
             }
-            if($this->changeYear == true){
-                $value = str_ireplace(['2015','2016','2017','2018','2019','2020'], $this->year, $value);
-            }
+
             $data[$i][] = $value;
         }
 
@@ -60,7 +72,7 @@ class Clustering
 
     public function makeOutFinalForParsing($output, $random = false, $skip = null)
     {
-        $data = $this->makeWordsArray($output);
+        $data = $this->toArray($output);
         // dd($data);
         $final = '';
         foreach ($data as $value) {
@@ -101,9 +113,11 @@ if(isset($_POST['text'])) {
     $keywords = $_POST['text'];
 }
 // dd($data);
-$out = new Clustering($year);
+$out = new Clustering();
 $data = $out->goClusteriseKeys($keywords);
-// dd($data);
+if($year) {
+    $data = $out->changeYear($data);
+}
 // data - ключи, true - рандомайзер
 if($small) {
     $data = $out->makeOutFinalForParsing($data, $random);

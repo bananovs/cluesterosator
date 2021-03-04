@@ -72,13 +72,13 @@ if(isset($_POST['paswd'])) {
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="is_random" value="1" id="defaultCheck1" checked>
                 <label class="form-check-label" for="defaultCheck1">
-                    Рандомить строки
+                    Рандомить строки в группе
                 </label>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="makesmall" value="1" id="defaultCheck1" checked>
                 <label class="form-check-label" for="defaultCheck1">
-                    Делать укороченую часть
+                    Брать по 1 ключу из группы
                 </label>
             </div>
             <!-- <div class="form-group row">
