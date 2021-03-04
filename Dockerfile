@@ -11,6 +11,7 @@ RUN useradd -u 1000 -ms /bin/bash -g www www
 COPY --chown=www:www ./app /home/www
 # COPY ./app /home/www/
 WORKDIR /home/www/
+RUN chmod 777 -R  data
 # Copying default Nginx configuration
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
