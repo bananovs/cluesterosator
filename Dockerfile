@@ -5,13 +5,15 @@ RUN apt-get install -y wget nano nginx php7.2 php7.2-fpm php7.2-intl php7.2-curl
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+RUN groupadd -g 1000 www-data
+RUN useradd -u 1000 -ms /bin/bash -g www-data www-data
 
-COPY --chown=www:www ./app /home/www
+COPY --chown=www-data:www-data ./app /home/www
 # COPY ./app /home/www/
 WORKDIR /home/www/
 RUN chmod 777 -R  data
+RUN chown www-data:www-data run.py 
+RUN chmod u+x run.py
 # Copying default Nginx configuration
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
