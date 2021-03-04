@@ -1,5 +1,5 @@
 <?php 
-//require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
 class Clustering
 {
@@ -43,7 +43,7 @@ class Clustering
     public function makeWordsArray($output)
     {
         $i = 0;
-        $array = explode("\r\n", $output);
+        $array = explode("\n", $output);
         foreach ($array as $key => $value) {
             if($value === "") {
                 $i++; 
@@ -61,6 +61,7 @@ class Clustering
     public function makeOutFinalForParsing($output, $random = false, $skip = null)
     {
         $data = $this->makeWordsArray($output);
+        // dd($data);
         $final = '';
         foreach ($data as $value) {
             $count = count($value);

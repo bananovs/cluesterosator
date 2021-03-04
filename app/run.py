@@ -22,4 +22,4 @@ settings = {
 }
 
 itogo = go_cluster(settings["input_path"], settings["output_path"])
-print(itogo.encode('utf-8'))
+print(itogo)

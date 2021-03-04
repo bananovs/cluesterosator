@@ -1,6 +1,8 @@
 <?php
-session_start();?>
-<? //ob_start();?>
+// session_start();
+?>
+<? //ob_start();
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,7 +17,7 @@ session_start();?>
   </head>
 <?php
 
-
+/*
 if(isset($_POST['paswd'])) {
   $pass = "assaassa";
   if($_POST['paswd'] === $pass) {
@@ -26,8 +28,9 @@ if(isset($_POST['paswd'])) {
     header("Location: index.php");
   }
 } elseif (!isset($_SESSION['access'])) {
+  */
   ?>
-  <div class="container">
+  <!-- <div class="container">
   <form method="POST">
   
   <div class="form-group">
@@ -36,11 +39,12 @@ if(isset($_POST['paswd'])) {
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  </div>
+  </div> -->
   <?php
-}
+//}
 ?>
-<?php if (isset($_SESSION['access']) && $_SESSION['access'] === true): ?>
+<?php //if (isset($_SESSION['access']) && $_SESSION['access'] === true): 
+  ?>
 
 
   <body>
@@ -49,12 +53,12 @@ if(isset($_POST['paswd'])) {
       <div class="jumbotron">
         <h1>Клустеризатор</h1>
         <form action="run.php"  enctype="multipart/form-data" method="POST">
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Example file input</label>
                 <div class="col-sm-10">
                 <input type="file" name='file' class="form-control-file" id="exampleFormControlFile1">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Example textarea</label>
                 <textarea class="form-control" name='text' id="exampleFormControlTextarea1" rows="13"></textarea>
@@ -98,4 +102,5 @@ if(isset($_POST['paswd'])) {
   </body>
 </html>
 
-<?php endif; ?>
+<?php //endif; 
+?>
